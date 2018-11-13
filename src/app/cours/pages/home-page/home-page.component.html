@@ -1,0 +1,22 @@
+<app-qcm></app-qcm>
+
+<section class="all">
+  <h1>Sélectionnez un cours</h1>
+  <app-liste-cours [listeCours]="coursRecuperesDepuisServeur" (selectionne)="commencerCours($event)"></app-liste-cours>
+</section>
+
+<section class="previous">
+  <h1>Cours précédemment suivis</h1>
+  <app-liste-cours [listeCours]="coursPrecedentsRecuperesDepuisServeur" (selectionne)="recommencerCours($event)"></app-liste-cours>
+</section>
+
+<section class="current">
+  <h1>Cours courant</h1>
+  <div *ngIf="coursCourant">
+    <app-resume-cours [cours]="coursCourant"></app-resume-cours>
+  </div>
+  <div *ngIf="!coursCourant">
+    Aucun cours sélectionné
+  </div>
+</section>
+

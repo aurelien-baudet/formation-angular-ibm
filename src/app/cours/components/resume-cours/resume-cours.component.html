@@ -1,0 +1,6 @@
+<div class="cours" (click)="coursSelectionne.emit(cours)">
+  <h3>{{ cours.titre }} ({{ cours.nombreVues }})</h3>
+  <img [src]="cours.vignette" />
+  <p>Résumé : {{ cours.resume }}</p>
+</div>
+

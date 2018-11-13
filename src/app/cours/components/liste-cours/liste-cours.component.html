@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let cours of listeCours">
+    <app-resume-cours [cours]="cours" (coursSelectionne)="selectionne.emit($event)"></app-resume-cours>
+  </li>
+</ul>

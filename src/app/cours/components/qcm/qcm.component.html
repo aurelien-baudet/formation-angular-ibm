@@ -1,0 +1,23 @@
+<form ngForm #qcmform="ngForm" (ngSubmit)="envoyerReponses(qcmform)" novalidate>
+  <fieldset>
+    <span>Q1 : Quel est la couleur du cheval blanc d'Henry IV ?</span>
+    <input type="text" name="couleurChevalName" 
+                      #couleurChevalInputAngular="ngModel" required 
+                      [(ngModel)]="questions.couleurCheval" />
+    <div *ngIf="(couleurChevalInputAngular.touched || couleurChevalInputAngular.dirty) && couleurChevalInputAngular.invalid"> 
+        Réponse requise pour la couleur
+    </div> 
+  </fieldset>
+  
+  <fieldset>
+    <span>Q2 : Quel est le nombre universel ?</span>
+    <label><input type="radio" name="nombreUniverselName" #nombreUniverselInputAngular="ngModel" required [(ngModel)]="questions.nombreUniversel" value="42" />42</label>
+    <label><input type="radio" name="nombreUniverselName" #nombreUniverselInputAngular="ngModel" required [(ngModel)]="questions.nombreUniversel" value="12" />12</label>
+    <label><input type="radio" name="nombreUniverselName" #nombreUniverselInputAngular="ngModel" required [(ngModel)]="questions.nombreUniversel" value="0" />0</label>
+    <div *ngIf="(nombreUniverselInputAngular.touched || nombreUniverselInputAngular.dirty) && nombreUniverselInputAngular.invalid"> 
+        Réponse requise pour le nombre universel
+    </div> 
+  </fieldset>
+
+  <button type="submit">Envoyer</button>
+</form>
