@@ -1,4 +1,5 @@
 export interface Cours {
+    id: string;
     titre: string;
     nombreVues: number;
     vignette: string;

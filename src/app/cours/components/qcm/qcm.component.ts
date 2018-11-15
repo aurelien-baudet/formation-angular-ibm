@@ -3,7 +3,8 @@ import { Form, FormControl } from '@angular/forms';
 
 interface Questions {
   couleurCheval?: string;
-  nombreUniversel?: number;
+  nombreUniversel?: string;
+  a?: string[]
 }
 
 
@@ -16,7 +17,8 @@ export class QcmComponent {
   @Input()
   questions: Questions = {
     couleurCheval: 'noir',
-    nombreUniversel: 12
+    nombreUniversel: '12',
+    a: []
   };
 
   envoyerReponses(form: FormControl) {

@@ -1,3 +1,5 @@
+import { CoursService } from './../../services/cours.service';
+import { ListeCoursService } from './../../services/liste-cours.service';
 import { Cours } from './../../model/cours';
 import { Component, OnInit } from '@angular/core';
 
@@ -6,53 +8,37 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent {
-
-  coursRecuperesDepuisServeur: Cours[] = [{
-    titre: 'Angular 7',
-    vignette: '',
-    nombreVues: 105,
-    resume: 'Les nouveautés d\'Angular'
-  }, {
-    titre: 'Spring Boot',
-    vignette: '',
-    nombreVues: 500,
-    resume: 'La magie de Spring Boot'
-  }, {
-    titre: 'Python',
-    vignette: '',
-    nombreVues: 5,
-    resume: 'Le langage du futur'
-  }, {
-    titre: 'NodeJS',
-    vignette: '',
-    nombreVues: 60,
-    resume: 'Réinventer la roue est notre crédo'
-  }];
-
-  coursPrecedentsRecuperesDepuisServeur: Cours[] = [{
-    titre: 'Angular 7',
-    vignette: '',
-    nombreVues: 105,
-    resume: 'Les nouveautés d\'Angular'
-  }, {
-    titre: 'NodeJS',
-    vignette: '',
-    nombreVues: 60,
-    resume: 'Réinventer la roue est notre crédo'
-  }]
-
+export class HomePageComponent implements OnInit {
+  coursRecuperesDepuisServeur: Cours[] = [];
+  coursPrecedentsRecuperesDepuisServeur: Cours[] = []
   coursCourant: Cours;
 
+  constructor(private listeCoursService: ListeCoursService,
+              private coursService: CoursService) {}
+
+  ngOnInit() {
+    this.rafraichir();
+  }
+  
   commencerCours(cours: Cours) {
     const choix = prompt("Souhaitez-vous acheter ce cours ?", "Oui");
     if(choix==="Oui") {
-      this.coursCourant = cours;
+      const coursAJour = this.coursService.choisirCours('moi', cours);
+      this.coursCourant = coursAJour;
+      this.rafraichir();
     }
   }
-
+  
   recommencerCours(cours: Cours) {
-    this.coursCourant = cours;
+    const coursAJour = this.coursService.choisirCours('moi', cours);   
+    this.coursCourant = coursAJour;
+    this.rafraichir();
+  }
+  
+  rafraichir() {
+    this.listeCoursService.listerTousLesCours()
+      .subscribe(cours => this.coursRecuperesDepuisServeur = cours);
+    this.coursPrecedentsRecuperesDepuisServeur = this.listeCoursService.listerCoursSuivis();
   }
 
 }

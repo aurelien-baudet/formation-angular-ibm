@@ -5,7 +5,7 @@ import { ProgressionCoursService } from "./progression-cours.service";
 import { Injectable } from "@angular/core";
 
 @Injectable()
-export class CoursService {
+export class CoursSuiviUniqueService {
     constructor(private progressionService: ProgressionCoursService, 
                 private storage: StorageService) {
     }
@@ -13,8 +13,12 @@ export class CoursService {
     choisirCours(qui, cours: Cours): Cours {
         // règle 1: ajouter un cours à la liste des cours précédemment suivis
         this.storage.sauveCoursSuivi(cours);
-        // règle 2: incrémenter le nombre de vues
+        // règle 2: incrémenter le nombre de vues 
+        //          seulement si le cours n'a pas déjà été suivi par l'étudiant
         const newCours = Object.assign({}, cours);
+        if(this.progressionService.dejaSuivi(qui, cours)) {
+            return newCours;
+        }
         newCours.nombreVues++;
         return this.storage.sauveCours(newCours);
     }
